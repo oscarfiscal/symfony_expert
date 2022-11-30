@@ -1,0 +1,19 @@
+{{
+    form_start(form_busqueda, {'attr': {'novalidate': 'novalidate','class': 'form-inline'},
+    method: 'POST',
+    action: path('app_search')
+    })
+    }}
+{{
+    form_busqueda.busqueda,{
+        attr:{
+            class:'ml-2',
+        }
+    }
+}}
+
+{{
+    form_busqueda
+    
+    {{ form_end(form_busqueda)
+}}

@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block contenedor_principal %}
+     {% include 'partial/_messages.html.twig' %}
+    <div class="my-3 p-3 bg-white rounded box-shadow">
+ 
+    <h6 class="border-bottom border-gray pb-2 mb-0">
+      Mis marcadores
+    </h6>
+    {% for marker in markers %}
+    <div class="media text-muted pt-3">
+      <svg width="32" height="32" class="mr-2 rounded">
+        <rect width="32" height="32" style="{{marker.category.color}}" />
+      </svg>
+      <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">  
+        <div class="d-flex justify-content-between align-items-center w-100">
+          <div> 
+            <a href="#" target="_blank">
+              <strong class="text-gray-dark">{{marker.name}}</strong>
+            </a>
+            <span class="d-block">{{marker.category.name}}</span>
+             <span class="d-block">
+             <small>
+              {{marker.created|time({format:format_date})}}
+             </small>
+             </span>
+             {% if marker.tag is not empty %}
+                <span class="d-block">
+             <small>
+             {% for markerTag in  %}
+              {{marker.created|time({format:format_date})}}
+             </small>
+             </span>
+              {% endif %}
+          </div>
+          <div class="d-flex">   
+             <a href="" class="btn btn-link mg-3 favorite {{marker.favorite ?  'active'}}" data-id="{{marker.id}}"
+             data-url="{{path('app_edit_favorite')}}">
+                <span class="oi oi-star" title="Favorite" aria-hidden="true"></span>
+            </a>               
+            <a href="{{ path('app_marker_edit',{id:marker.id})}}" class="btn btn-link mg-3">
+                <span class="oi oi-pencil" title="Editar" aria-hidden="true"></span>
+            </a>
+              {{ include('marker/_delete_form.html.twig') }}
+           
+          </div>
+        </div>
+      </div>
+    </div> 
+    <div class="mt-3">
+    {{
+      include('partial/_pagination.html.twig', {
+      ' elements_per_page': elements_per_page,
+      'num_total_elements': markers.count,
+      'page_current': page,
+      })
+    }}
+    </div>
+      {% else %}
+    <div class="my-3 p-3 bg-white rounded box-shadow">
+      <h6 class="border-bottom border-gray pb-2 mb-0">
+        No tienes marcadores
+      </h6>
+    </div>
+  {% endfor %} 
+
+  </div>
+
+
+{% endblock %}
+

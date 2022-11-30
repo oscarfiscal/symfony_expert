@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Marker index{% endblock %}
+
+{% block body %}
+    <h1>Marker index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Url</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for marker in markers %}
+            <tr>
+                <td>{{ marker.id }}</td>
+                <td>{{ marker.name }}</td>
+                <td>{{ marker.url }}</td>
+                <td>
+                    <a href="{{ path('app_marker_show', {'id': marker.id}) }}">show</a>
+                    <a href="{{ path('app_marker_edit', {'id': marker.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_marker_new') }}">Create new</a>
+{% endblock %}

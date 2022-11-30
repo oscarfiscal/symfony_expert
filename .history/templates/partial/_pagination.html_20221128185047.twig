@@ -1,0 +1,54 @@
+{% set num_total_page = (num_total_elements / elements_per_page)|round(0,'ceil') %}
+
+{% set params = params_route is defined params_route:  %}
+{% set name_route = name_route is defined ? name_route : app.request.attributes.get('_route') %}
+
+{%  if num_total_page > 1 %}
+    <nav>
+        <ul class="page navigation">
+            <li class="page-item {{page_current == 1 ? 'disabled'}}">
+                <a class="page_link"
+                href="{{path(name_route,
+                    {
+                        page: page_current - 1 < 1 ? 1 : page_current - 1,
+                    }|merge(params)
+                 )
+                 }}">
+                    <span >&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    {% for i in 1..num_total_page %}
+     <li class="page-item {{page_current == i ? 'active'}}">
+                <a class="page_link"
+                href="{{path(name_route,
+                    {
+                        page:1,
+                    }|merge(params)
+                 )
+                 }}">
+                    <span >&raquo;</span>
+                    <span class="sr-only">{{ 1 }}</span>
+                </a>
+            </li>
+    {%  endfor %}
+     <nav>
+        <ul class="page navigation">
+            <li class="page-item {{page_current == num_total_page ? 'disabled'}}">
+                <a class="page_link"
+                href="{{path(name_route,
+                    {
+                     page: page_current + 1 <= num_total_page ? page_current + 1 : page_current,
+                    }|merge(params)
+                 )
+                 }}">
+                    <span >&raquo;</span>
+                    <span class="sr-only">Siguiente</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+{% endif %}

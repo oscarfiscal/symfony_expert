@@ -1,0 +1,31 @@
+<?php
+namespace App\Twig;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
+
+class Time extends AbstractExtension
+{
+    const CONFIGURACION = [
+        'formato' => 'Y/m/d H:m:s',
+    ];
+    public function getFilters()
+    {
+        return [
+            new TwigFilter('time', [$this, 'timeFilter']),
+        ];
+    }
+
+    public function timeFilter($date, $config = [])
+    {
+        $config = array_merge(self::CONFIGURACION, $config);
+      
+        $datecurrent = new \DateTime();
+    
+        $dateformat = $date->format($config['formato']);
+       
+        $differenceDateSecounds = $datecurrent->getTimestamp() - $date->getTimestamp();
+
+       
+        return $dateformat;
+    }
+}

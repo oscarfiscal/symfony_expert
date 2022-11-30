@@ -1,0 +1,10 @@
+{% set num_total_elements = (total_elements / page)|round %}
+
+{% set params = params_route is defined params_route:{} %}
+{% set name_route = name_route is defined ? name_route : app.request.attributes.get('_route') %}
+
+{%  if num_total_elements > 1 %}
+    <nav>
+    
+    </nav>
+{% endif %}

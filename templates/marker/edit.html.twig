@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Marker{% endblock %}
+
+{% block contenedor_principal %}
+    <h1>Edit Marker</h1>
+
+    {{ include('marker/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_marker_index') }}">back to list</a>
+
+     <button type="button"
+      class="btn btn-link"
+      data-toggle="modal"
+      data-target="#newTagModal">
+      </button>
+       {{ include('tag/new.modal.html.twig') }}
+    {{ include('marker/_delete_form.html.twig') }}
+{% endblock %}
+  {% block stylesheet_propio %}
+        <link rel="stylesheet" href="/css/general.css" />
+  {% endblock %}
+  {% block javascript_propio %}
+        <script src="{{asset('bundles/tetranzselect2entity/js/select2entity.js') }}"></script>
+  {% endblock %}

@@ -1,0 +1,97 @@
+<?php
+
+namespace App\Controller;
+
+use App\Repository\CategoryRepository;
+use App\Repository\MarkerRepository;
+use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\TagRepository;
+
+class CategoryController extends AbstractController
+{
+    public const ELEMENTS_PER_PAGE = 1;
+
+  
+
+    #[Route('/buscar/{search}/{page}', name:'app_search', defaults:['search' => '', 'page' => 1], requirements:["page" => "\d+"])]
+function search(string $search, int $page, MarkerRepository $markerRepository, CategoryRepository $categoryRepository, Request $request): Response
+    {
+    $formSearch = $this->createForm(\App\Form\SearchType::class);
+    $formSearch->handleRequest($request);
+
+    $markers = [];
+    if ($formSearch->isSubmitted() && $formSearch->isValid()) {
+        $search = $formSearch->get('busqueda')->getData();
+
+    }
+    if (!empty($search)) {
+        $markers = $markerRepository->filterName($search, $page, self::ELEMENTS_PER_PAGE);
+    }
+    if ((!empty($search) || $formSearch->isSubmitted())) {
+        return $this->render('index/index.html.twig', [
+            'formSearch' => $formSearch->createView(),
+            'markers' => $markers,
+            'page' => $page,
+            'params_route' => [
+                'search' => $search,
+            ],
+            'elements_per_page' => self::ELEMENTS_PER_PAGE,
+        ]);
+    }
+
+    return $this->render('partial/_search.html.twig', [
+        'formSearch' => $formSearch->createView(),
+    ]);
+}
+
+#[Route('/edit-favorite', name:'app_edit_favorite')]
+function editfavorite(MarkerRepository $markerRepository, Request $request, ManagerRegistry $doctrine): Response
+    {
+    if ($request->isXmlHttpRequest()) {
+        $update = true;
+        $id = $request->request->get('id');
+        $entityManager = $doctrine->getManager();
+        $marker = $markerRepository->find($id);
+        $entityManager->persist($marker);
+        $marker->setFavorite(!$marker->isFavorite());
+
+        try {
+            $entityManager->flush();
+        } catch (\Exeption$e) {
+            $update = false;
+        }
+        return $this->json(['update' => $update]);
+
+    }
+    throw new createNotFoundHttpException();
+}
+
+#[Route('/favorite/{page}', name:'app_favorite', defaults:["page" => 1], requirements:["page" => "\d+"])]
+function favorite(int $page, MarkerRepository $markerRepository): Response
+    {
+
+    $markers = $markerRepository->filterFavorite($page, self::ELEMENTS_PER_PAGE);
+
+    return $this->render('index/index.html.twig', [
+        'markers' => $markers,
+        'page' => $page,
+        'elements_per_page' => self::ELEMENTS_PER_PAGE,
+    ]);
+}
+
+
+#[Route('/search-tag', name: 'app_search_tag')]
+public function searchTag(TagRepository $tagRepository, Request $request): Response
+{
+   if($request->isXmlHttpRequest()) {
+      $search = $request->get('q');
+        $tags = $tagRepository->findByName($search); 
+        return $this->json($tags);
+   }
+   throw $this->createNotFoundException('Not found');
+}
+}

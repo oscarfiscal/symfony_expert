@@ -1,0 +1,12 @@
+twig:
+    default_path: '%kernel.project_dir%/templates'
+    form_themes: ['bootstrap_5_horizontal_layout.html.twig','@TetranzSelect2Entity/form/fields.html.twig ' ]
+    globals:
+         format_date: '%app.format_date%'
+         category_repository: '@App\Repository\CategoryRepository'
+         app.listado_idiomas: '%app.listado_idiomas%'
+ 
+
+when@test:
+    twig:
+        strict_variables: true

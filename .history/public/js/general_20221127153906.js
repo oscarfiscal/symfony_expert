@@ -1,0 +1,1 @@
+$('.favorite').on('click', function() {

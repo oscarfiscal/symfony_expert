@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block contenedor_principal %}
+
+<h1 class="text-center">Listado de categorias</h1>
+
+<table class="table table-striped">
+    <head>
+        <tr>
+            <th>Nombre</th>
+            <th>Descripcion</th>
+         
+        </tr>
+    </head>
+    <body>
+        {% for category in categories %}
+            <tr>
+                <td>{{ category.name }}</td>
+            </tr>
+        {% endfor %}
+{% endblock %}

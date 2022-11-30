@@ -1,0 +1,12 @@
+twig:
+    default_path: '%kernel.project_dir%/templates'
+    form_themes: ['bootstrap_5_horizontal_layout.html.twig']
+    globals:
+        app_name: 'My App'
+        app_version: '1.0.0'
+    format_date: 'd/m/Y H:m'
+ 
+
+when@test:
+    twig:
+        strict_variables: true

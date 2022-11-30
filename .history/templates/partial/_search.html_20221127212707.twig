@@ -1,0 +1,26 @@
+{{
+    form_start(formSearch, {'attr': {'novalidate': 'novalidate','class': 'form-inline'},
+    method: 'POST',
+    action: path('app_search')
+    })
+    }}
+{{
+    form_widget(formSearch.busqueda, {'attr': {'class': 'form-control mr-sm-2', 'placeholder': 'Buscar', 'aria-label': 'Search'}})
+    }}
+  
+
+{{
+    form_widget(
+    formSearch.buscar,
+    {
+        attr:{
+            class:'btn btn-primary ml-2',
+        }
+    }
+    )
+}}
+
+{{form_errors(formSearch.busqueda)}}
+    
+    {{ form_end(formSearch)
+}}

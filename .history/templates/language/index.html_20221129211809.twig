@@ -1,0 +1,18 @@
+<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a class="btn btn-outline.primary dropdown-toggle"
+        href=""
+        role="button"
+        id="selectorIdioma"
+        data-toggle="true">
+        {{ idioma_actual }}
+    </a>
+
+    <div class="dropdown-menu" aria-labelledby="selectorIdioma">
+        {% for lenguaje, nombre_lenguaje in listado_idiomas %}
+           <form action="{{ url_for('cambiar_idioma') }}" method="post">
+               <input type="hidden" name="idioma" value="{{ lenguaje }}">
+               <button class="dropdown-item" type="submit">{{ nombre_lenguaje }}</button>
+        {% endfor %}
+    </div>
+
+  </div>

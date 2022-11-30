@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block contenedor_principal %}
+{% for type,messages in app.flashes %}
+{% message in message %}
+<div class="alert alert-{{ type }} alert-dismissible fade show">
+{{ message }}
+<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+</div>
+{% %}
+{% endfor %}
+  <form  method="POST">
+         <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input type="text" class="form-control" value="{{category.name}}" id="nombre" name="nombre" placeholder="Nombre">
+        </div>
+       
+        <input type="hidden"  name="_token" value="{{ csrf_token('category') }}">
+        <button type="submit" class="btn btn-ouline-success">Guardar</button>
+  </form>
+
+{% endblock %}
+

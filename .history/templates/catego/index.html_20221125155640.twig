@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block contenedor_principal %}
+  {% include 'partial/_messages.html.twig' %}
+<h1 class="text-center">Listado de categorias</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Color</th>
+            <th>Acciones</th>
+         
+        </tr>
+    </thead>
+    <tbody>
+        {% for category in categories %}
+            <tr>
+                <td>{{ category.name }}</td>
+                <td>{{ category.color }}</td>
+                <td>
+                    <a href="{{ path('app_update_category', {'id': category.id}) }}" class="btn btn-warning">Editar</a>
+                    <a href="{{ path('app_delete_category', {'id': category.id}) }}" class="btn btn-danger">Eliminar</a>
+                  
+                </td>
+                
+            </tr>
+    </tbody>
+ 
+</table>
+        {% endfor %}
+{% endblock %}

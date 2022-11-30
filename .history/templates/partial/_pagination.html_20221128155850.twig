@@ -1,0 +1,15 @@
+{% set num_total_elements = (total_elements / page)|round(0,'ceeil') %}
+
+{% set params = params_route is defined params_route:{} %}
+{% set name_route = name_route is defined ? name_route : app.request.attributes.get('_route') %}
+
+{%  if num_total_elements > 1 %}
+    <nav>
+        <ul class="page navigation">
+            <li class="page-item {{page == 1 ? 'disabled'}}">
+                <a>
+                </a>
+            </li>
+        </ul>
+    </nav>
+{% endif %}

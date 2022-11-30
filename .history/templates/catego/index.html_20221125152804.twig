@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block contenedor_principal %}
+
+<h1 class="text-center">Listado de categorias</h1>
+
+<table class="table table-striped">
+    <head>
+        <tr>
+            <th>Nombre</th>
+            <th>Color</th>
+            <th>Acciones</th>
+         
+        </tr>
+    </head>
+    <body>
+        {% for category in categories %}
+            <tr>
+                <td>{{ category.name }}</td>
+                <td>{{ category.color }}</td>
+                <td>
+                    <a href="{{ path('category_show', {'id': category.id}) }}" class="btn btn-primary">Ver</a>
+                    <a href="{{ path('category_edit', {'id': category.id}) }}" class="btn btn-warning">Editar</a>
+                    <a href="{{ path('category_delete', {'id': category.id}) }}" class="btn btn-danger">Eliminar</a>
+                </td>
+                
+            </tr>
+        {% endfor %}
+{% endblock %}

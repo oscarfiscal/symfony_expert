@@ -1,0 +1,17 @@
+{% set ajax = ajax is defined and ajax %}
+{% if ajax  %}
+    {{include('partial/messages.html.twig')}}
+{% endif %}
+
+{{ 
+    form_start(
+        form,
+        attr = {
+          
+        }
+
+    ) 
+}}
+    {{ form_widget(form) }}
+    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}

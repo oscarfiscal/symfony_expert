@@ -1,0 +1,61 @@
+{% set app_ruta = app.request.attributes.get('_route') %}
+{% set name_category = app.request.attributes.get('category') %}
+
+<nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
+  <a class="navbar-brand" href="{{ path('app_category') }}">Mis marcadores</a>
+  <button class="navbar-toggler p-0 border-0"
+    type="button"
+    data-toggle="offcanvas">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item"><a class="nav-link {{'app_category' ? 'active'}} " href="{{ path('app_category')}}">Todas</a></li>
+      <li class="nav-item"><a class="nav-link {{'app_favorite' ? 'active'}} " href="{{ path('app_favorite')}}">Favoritos</a></li>
+    
+      {% for category in category_repository.findAll %}
+           
+       <li class="nav-item"><a class="nav-link  {{'app_category' == app_ruta and category.name == name_category ? 'active'}}" href="{{ path('app_category', {category: category.name})}}">{{category.name}}</a></li>
+
+      {% endfor %}
+      
+    </ul>
+    <div class="d-md-flex my-2 my-lg-0">
+      <a class="btn btn-outline-success mr-2 w-100 mb-3 mb-sm-0" title="Gestión de etiquetas" href="{{ path('app_tag_index')}}">
+        Etiquetas
+      </a>
+      <a class="btn btn-outline-success mr-2 w-100 mb-3 mb-sm-0" title="Gestión de categorias" href="{{ path('app_catego')}}">
+        Categorías
+      </a>
+    
+      <a class="btn btn-outline-success mr-2 w-100" title="Añadir marcador" href="{{ path('app_marker_new')}}">
+        <span class="oi oi-plus" title="añadir" aria-hidden="true"></span>
+      </a>
+    </div>
+    
+    {% if formSearch is defined %}
+    {{
+      include(
+        'partial/_search.html.twig',
+        {
+          formSearch: formSearch
+        }
+      )
+    }}
+  {% else %}
+   {{
+    render(
+      controller(
+      'App\\Controller\\CategoryController::search',
+      {
+        'search': search is defined ? search, 
+        'page' : page is defined ? page : 1
+      }
+    
+      )
+    )
+  }}
+  {% endif %}
+  </div>
+</nav>
