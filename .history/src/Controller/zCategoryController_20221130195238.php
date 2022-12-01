@@ -11,7 +11,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 
 
-class CategoryController extends AbstractController
+class ZCategoryController extends AbstractController
 {
     public const ELEMENTS_PER_PAGE = 1;
 
@@ -23,7 +23,8 @@ public function index(
     int $page,
     CategoryRepository $categoryReposotiry, 
     MarkerRepository $markerRepository,
-    TranslatorInterface $translator): Response
+    TranslatorInterface $translator,
+    s  ): Response
     {
     $elementsPerPage = self::ELEMENTS_PER_PAGE;
     $category = (int) $category > 0 ? (int) $category : $category;

@@ -1,0 +1,19 @@
+{% if app.user %}
+    <div class="dropdown ml-2">
+        <a class="btn btn-secondary dropdown-toggle"
+            href=""
+            id="closedSession"
+            data-toggle="dropdown">
+            <span class="oi oi-person"></span>
+            {{ app.user}}
+        </a>
+
+        <div class="dropdown-menu dropdown-menu-right">
+            <a class="dropdown-item" href="{{ path('app_logout') }}">
+                <span class="oi oi-account-logout"></span>
+                {{ 'Logout'|trans }}
+            </a>
+    </div>
+
+
+{% endif %}
